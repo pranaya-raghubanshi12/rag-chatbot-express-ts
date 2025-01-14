@@ -1,0 +1,104 @@
+openapi: 3.0.1
+info:
+  title: RAG model API
+  description: API Docs for uploading context markdown files to generate vector embedded messages for information extraction.
+  version: 1.0.0
+servers:
+    url: http://localhost:3000
+    description: Local development server
+paths:
+  /upload:
+    post:
+      summary: Upload a file
+      description: Allows users to upload a markdown file.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: file
+                  description: The markdown file to upload containing relevant information
+      responses:
+        "200":
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: File processed and data stored successfully.
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: No File Uploaded.
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Failed to process the file.
+  /chat:
+    get:
+      summary: Generate messages based on user's message on particular context
+      description: Generate response by processing through embedded vector data of markdown file uploaded before
+      responses:
+        "200":
+          description: A list of chat messages
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        role:
+                          type: string
+                          enum: [user, assistant]
+                          description: The role of the message sender
+                        content:
+                          type: string
+                          description: The content of the message
+                example:
+                  messages:
+                    - role: user
+                      content: "Who won the championship in 2023?"
+                    - role: user
+                      content: "Who won the championship in 2022?"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid 'messages' format. Must be an array.
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal db server error
