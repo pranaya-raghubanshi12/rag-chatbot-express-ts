@@ -15,3 +15,7 @@
 [Random ABCD Company's financial reports](https://github.com/pranaya-raghubanshi12/rag-chatbot-express-ts/blob/main/example-company.md)
 
 [F1 World Champions List](https://github.com/pranaya-raghubanshi12/rag-chatbot-express-ts/blob/main/example.md)
+
+## Prompts are set in file below
+
+[File to set prompt](https://github.com/pranaya-raghubanshi12/rag-chatbot-express-ts/blob/main/src/helpers/ChatHelper.ts#L12)
